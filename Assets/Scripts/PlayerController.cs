@@ -13,6 +13,12 @@ public class PlayerController : MonoBehaviour {
     public float tilt;
     public Boundry boundry;
 
+    public GameObject shot;
+    public Transform shotSpawn;
+    public float fireRate = 0.5f;
+
+    private float nextFire = 0.0f;
+
     //executed once for each physics step
 	void FixedUpdate ()
     {
@@ -31,5 +37,16 @@ public class PlayerController : MonoBehaviour {
         );
 
         playerRb.rotation = Quaternion.Euler(0.0f, 0.0f, playerRb.velocity.x * -tilt);
+    }
+
+    //Fires before each frame updates, every frame
+    void Update ()
+    {
+        if (Input.GetButton("Fire1") && Time.time > nextFire)
+        {
+            nextFire = Time.time + fireRate;
+            //GameObject clone = 
+            Instantiate(shot, shotSpawn.position, shotSpawn.rotation); //as GameObject;
+        }
     }
 }
